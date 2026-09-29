@@ -1,0 +1,80 @@
+@import url("reset.css");
+@import url("variables.css");
+
+
+body {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+}
+
+
+.app {
+  width: min(95vw, 760px);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  padding: 24px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.title {
+  font-size: 2rem;
+}
+
+.controls {
+  display: flex;
+  gap: 1rem;
+}
+
+.button {
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 1rem;
+  cursor: pointer;
+}
+
+.scoreboard {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.stat-box {
+  flex: 1;
+  background: var(--stat-box-bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px 16px;
+}
+
+.stat-label {
+  display: block;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.board {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.card {
+  flex: 1 1 calc(25% - 12px);
+  min-width: 50px;
+  aspect-ratio: 1 / 1;
+  border-radius: 1rem;
+  cursor: pointer;
+  background-color: white;
+}

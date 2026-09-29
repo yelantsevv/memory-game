@@ -1,0 +1,13 @@
+:root {
+  --bg: #0f172a;
+  --border: #929498;
+  --stat-box-bg: #2b313f;
+  --text: #e5e7eb;
+}
+
+/* [data-theme="dark"] {} */
+
+html {
+  font-family: Arial, sans-serif;
+  font-weight: 600;
+}
