@@ -45,7 +45,6 @@ function shuffle(array) {
     const randomIndex = Math.floor(Math.random() * (index + 1));
     [copy[index], copy[randomIndex]] = [copy[randomIndex], copy[index]];
   }
-  // console.log(copy);
   return copy;
 }
 
@@ -74,7 +73,6 @@ function createCard(cardData) {
 function renderBoard() {
   board.replaceChildren();
   state.deck.forEach((cardData) => {
-    // console.log(cardData);
     board.appendChild(createCard(cardData));
   });
 }
@@ -127,9 +125,6 @@ function handleCardClick(event) {
     state.selectedCards = [];
     updateStats();
 
-    // if (state.matches === SYMBOLS.length) {
-    //   finishGame();
-    // }
     if (state.matches === SYMBOLS.length) {
       finishGame();
     }
@@ -191,7 +186,6 @@ function startNewGame() {
   state.hasSavedResult = false;
   closeModal(winModal);
   updateStats();
-  // console.log(state);
   renderBoard();
 }
 
