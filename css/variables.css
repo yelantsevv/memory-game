@@ -1,7 +1,8 @@
 :root {
   --bg: #0f172a;
-  --border: #929498;
   --stat-box-bg: #2b313f;
+  --matched-bg: #22c55e;
+  --border: #929498;
   --text: #e5e7eb;
 }
 

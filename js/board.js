@@ -1,4 +1,4 @@
-import { board } from "./script.js";
+import { board, movesValue, matchesValue } from "./script.js";
 
 const SYMBOLS = ["🍉", "🍋", "🍇", "🍒", "🍊", "🍎", "🍍", "🍓"];
 
@@ -48,7 +48,7 @@ function createCard(cardData) {
 
   card.append(back, face);
 
-  card.addEventListener("click", () => {});
+  card.addEventListener("click", handleCardClick);
   return card;
 }
 
@@ -58,6 +58,81 @@ function renderBoard() {
     // console.log(cardData);
     board.appendChild(createCard(cardData));
   });
+}
+
+function updateStats() {
+  movesValue.textContent = String(state.moves);
+  matchesValue.textContent = `${state.matches} / ${SYMBOLS.length}`;
+}
+function updateCardState(cardElement, isFlipped, isMatched) {
+  cardElement.classList.toggle("is-flipped", isFlipped);
+  cardElement.classList.toggle("is-matched", isMatched);
+
+  const isLocked = isMatched || isFlipped;
+  cardElement.disabled = isLocked && !isMatched;
+  cardElement.setAttribute(
+    "aria-label",
+    isFlipped ? `Card ${cardElement.dataset.symbol}` : "Hidden card",
+  );
+}
+
+function handleCardClick(event) {
+  const clickedCard = event.currentTarget;
+
+  if (state.isLocked || state.isGameFinished) {
+    return;
+  }
+
+  if (
+    clickedCard.classList.contains("is-flipped") ||
+    clickedCard.classList.contains("is-matched")
+  ) {
+    return;
+  }
+
+  updateCardState(clickedCard, true, false);
+  state.selectedCards.push(clickedCard);
+
+  if (state.selectedCards.length === 1) {
+    return;
+  }
+
+  state.moves += 1;
+  updateStats();
+
+  const [firstCard, secondCard] = state.selectedCards;
+  if (firstCard.dataset.symbol === secondCard.dataset.symbol) {
+    updateCardState(firstCard, true, true);
+    updateCardState(secondCard, true, true);
+    state.matches += 1;
+    state.selectedCards = [];
+    updateStats();
+
+    if (state.matches === SYMBOLS.length) {
+      finishGame();
+    }
+    return;
+  }
+
+  state.isLocked = true;
+  state.mismatchTimer = setTimeout(() => {
+    clearMismatch();
+  }, 900);
+}
+
+function clearMismatch() {
+  if (state.mismatchTimer) {
+    clearTimeout(state.mismatchTimer);
+    state.mismatchTimer = null;
+  }
+
+  if (state.selectedCards.length === 2) {
+    const [firstCard, secondCard] = state.selectedCards;
+    updateCardState(firstCard, false, false);
+    updateCardState(secondCard, false, false);
+    state.selectedCards = [];
+    state.isLocked = false;
+  }
 }
 
 function startNewGame() {
@@ -76,6 +151,5 @@ function startNewGame() {
   // console.log(state);
   renderBoard();
 }
-
 
 export { startNewGame };

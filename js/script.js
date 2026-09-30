@@ -58,7 +58,6 @@ scoreboard.append(movesBox, matchesBox);
 app.append(header, scoreboard, board);
 document.body.appendChild(app);
 
-export { board };
+export { board, movesValue, matchesValue };
 
 startNewGame();
-
