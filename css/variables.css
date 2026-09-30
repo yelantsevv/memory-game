@@ -1,9 +1,11 @@
 :root {
   --bg: #0f172a;
   --stat-box-bg: #2b313f;
-  --matched-bg: #22c55e;
+  --matched-bg: #4e4e4a30;
+  --bg-overlay: rgba(15, 23, 42, 0.8);
   --border: #929498;
   --text: #e5e7eb;
+  --border-modal: #4b5563
 }
 
 /* [data-theme="dark"] {} */

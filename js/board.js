@@ -1,4 +1,13 @@
-import { board, movesValue, matchesValue } from "./script.js";
+import {
+  closeModal,
+  getLeaderboard,
+  sortLeaderboard,
+  openModal,
+  saveLeaderboard,
+  winTitle,
+  winMessage,
+  winModal,
+} from "./leader.js";
 
 const SYMBOLS = ["🍉", "🍋", "🍇", "🍒", "🍊", "🍎", "🍍", "🍓"];
 
@@ -12,6 +21,16 @@ const state = {
   isGameFinished: false,
   hasSavedResult: false,
 };
+
+let board;
+let movesValue;
+let matchesValue;
+
+function initializeBoard(elements) {
+  board = elements.board;
+  movesValue = elements.movesValue;
+  matchesValue = elements.matchesValue;
+}
 
 function buildDeck() {
   const cards = SYMBOLS.flatMap((symbol, index) => [
@@ -108,6 +127,9 @@ function handleCardClick(event) {
     state.selectedCards = [];
     updateStats();
 
+    // if (state.matches === SYMBOLS.length) {
+    //   finishGame();
+    // }
     if (state.matches === SYMBOLS.length) {
       finishGame();
     }
@@ -120,6 +142,25 @@ function handleCardClick(event) {
   }, 900);
 }
 
+function finishGame() {
+  state.isGameFinished = true;
+
+  if (!state.hasSavedResult) {
+    const leaderboard = getLeaderboard();
+    leaderboard.push({
+      moves: state.moves,
+      date: new Date().toISOString(),
+    });
+
+    const sorted = sortLeaderboard(leaderboard).slice(0, 10);
+    saveLeaderboard(sorted);
+    state.hasSavedResult = true;
+  }
+
+  winTitle.textContent = "You won!";
+  winMessage.textContent = `You solved the board in ${state.moves} moves.`;
+  openModal(winModal);
+}
 function clearMismatch() {
   if (state.mismatchTimer) {
     clearTimeout(state.mismatchTimer);
@@ -148,8 +189,10 @@ function startNewGame() {
   state.isLocked = false;
   state.isGameFinished = false;
   state.hasSavedResult = false;
+  closeModal(winModal);
+  updateStats();
   // console.log(state);
   renderBoard();
 }
 
-export { startNewGame };
+export { initializeBoard, startNewGame };

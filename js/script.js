@@ -1,4 +1,10 @@
-import { startNewGame } from "./board.js";
+import { initializeBoard, startNewGame } from "./board.js";
+import {
+  leaderboardModal,
+  openModal,
+  renderLeaderboard,
+  winNewGameButton,
+} from "./leader.js";
 
 const app = document.createElement("div");
 app.className = "app";
@@ -16,13 +22,17 @@ const newGameButton = document.createElement("button");
 newGameButton.type = "button";
 newGameButton.className = "button";
 newGameButton.textContent = "New Game";
-newGameButton.addEventListener("click", () => {});
+newGameButton.addEventListener("click", startNewGame);
+winNewGameButton.addEventListener("click", startNewGame);
 
 const leaderButton = document.createElement("button");
 leaderButton.type = "button";
 leaderButton.className = "button";
 leaderButton.textContent = "Leader";
-leaderButton.addEventListener("click", () => {});
+leaderButton.addEventListener("click", () => {
+  renderLeaderboard();
+  openModal(leaderboardModal);
+});
 
 controls.append(newGameButton, leaderButton);
 header.append(title, controls);
@@ -60,4 +70,5 @@ document.body.appendChild(app);
 
 export { board, movesValue, matchesValue };
 
+initializeBoard({ board, movesValue, matchesValue });
 startNewGame();
