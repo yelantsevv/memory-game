@@ -1,3 +1,5 @@
+import { startNewGame } from "./board.js";
+
 const app = document.createElement("div");
 app.className = "app";
 
@@ -55,3 +57,8 @@ scoreboard.append(movesBox, matchesBox);
 
 app.append(header, scoreboard, board);
 document.body.appendChild(app);
+
+export { board };
+
+startNewGame();
+
