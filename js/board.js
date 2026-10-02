@@ -134,7 +134,7 @@ function handleCardClick(event) {
   state.isLocked = true;
   state.mismatchTimer = setTimeout(() => {
     clearMismatch();
-  }, 900);
+  }, 700);
 }
 
 function finishGame() {
