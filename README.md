@@ -66,4 +66,3 @@ memory-game/
 ## Автор
 
 Проект создан в рамках обучения на Rolling Scopes School.
-
